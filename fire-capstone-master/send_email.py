@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 
 import fire
- 
+
 def extract_contacts(contact_file):
   """
   Return two lists contacts, containing names and email addresses
@@ -36,17 +36,17 @@ def extract_summary(file_path="data_input/data.csv", id=['936','1178']):
   campaigns = campaigns[campaigns.spent > 0]
 
   # Make sure to passed in appropriate preprocessing before extracting the start and end date
-  campaigns['reporting_start'] = ___
-  start_date = ___.min().strftime(format="%d %b %Y")
-  end_date = ___.max().strftime(format="%d %b %Y")
+  campaigns['reporting_start'] = pd.to_datetime(campaigns["reporting_start"])
+  start_date = campaigns['reporting_start'].min().strftime(format="%d %b %Y")
+  end_date = campaigns['reporting_start'].max().strftime(format="%d %b %Y")
 
-  total_spent = int(___.sum())
-  total_conversion = int(___.sum())
+  total_spent = int(campaigns['spent'].sum())
+  total_conversion = int(campaigns['total_conversion'].sum())
 
   # Create a cost per conversion dictionary per campaign
   # Cost per conversion is spent divided by total conversion
-  cpc = campaigns.groupby(['campaign_id'])[[___, ___]].sum()
-  cpc['CPC'] = cpc[___]/cpc[___]
+  cpc = campaigns.groupby(['campaign_id'])[['spent', 'total_conversion']].sum()
+  cpc['CPC'] = cpc['spent']/cpc['total_conversion']
   cpc_each = dict()
   for each in id:
     cpc_each[each] = round(float(cpc[cpc.index == each]['CPC']), 2)
@@ -89,10 +89,10 @@ def compose_email(template, name, data_dict):
   """
   composed = template.substitute(
     PERSON_NAME=name,
-    START_DATE=data_dict[___],
-    END_DATE=data_dict[___],
-    TOTAL_SPENT="{:,}".format(data_dict[___]),
-    TOTAL_CONVERSION="{:,}".format(data_dict[___]),
+    START_DATE=data_dict['start_date'],
+    END_DATE=data_dict['end_date'],
+    TOTAL_SPENT="{:,}".format(data_dict['total_spent']),
+    TOTAL_CONVERSION="{:,}".format(data_dict['total_conversion']),
     CPC=unroll_sentence(data_dict['cpc']),
     GITHUB_LINK='https://github.com/tiaradwiputri/fire-capstone'
   )
@@ -126,7 +126,7 @@ def create_plot(file_path="data_input/data.csv", id=['936', '1178']):
 
   # Create a grouped dataframe based on campaign id, age group, and reporting date
   # Calculate the total converision of each group
-  grouped = campaigns.groupby(by=['___', '___', '___'], as_index=False)['___'].___
+  grouped = campaigns.groupby(by=['campaign_id', 'age', 'reporting_start'], as_index=False)['total_conversion'].sum()
 
   fig = plt.figure(1, figsize=(15,6))
 

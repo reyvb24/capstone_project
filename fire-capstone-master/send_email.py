@@ -148,7 +148,7 @@ def create_plot(file_path="data_input/data.csv", id=['936', '1178']):
   return(imagename)
 
 def main(subject, \
-  contact_file='___', \
+  contact_file='mentor@algorit.ma', \
   template_file='templates/body.txt', \
   data_file='data_input/data.csv'):
   """   

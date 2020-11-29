@@ -134,9 +134,9 @@ def create_plot(file_path="data_input/data.csv", id=['936', '1178']):
   for i, campaign in enumerate(grouped.campaign_id.unique()):
     plt.subplot(1, len(id), i+1)
     
-    df = grouped[grouped[___] == campaign].loc[:,['age', 'reporting_start', 'total_conversion']]
+    df = grouped[grouped['campaign_id'] == campaign].loc[:,['age', 'reporting_start', 'total_conversion']]
     df['reporting_start'] = df['reporting_start'].dt.date
-    pivot = df.pivot(index='___', columns='___', values='___').fillna(0)
+    pivot = df.pivot(index='reporting_start', columns='age', values='total_conversion').fillna(0)
     pivot.plot.bar(ax=plt.gca())
 
   fig.suptitle('Campaign Conversion per Age Group', fontsize=20)

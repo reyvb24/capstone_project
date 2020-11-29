@@ -165,7 +165,6 @@ def main(subject, \
   data_dict = extract_summary(data_file)
 
   # // TODO: CHALLENGE 3
-  # // Log in into Outlook email account
   # // Please use environment variable for security purposes
   s = authenticate_account(EMAIL=os.environ['EMAIL_ADDRESS'], \
     PASSWORD=os.environ['EMAIL_PASSWORD'])

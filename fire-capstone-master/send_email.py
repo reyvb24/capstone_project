@@ -94,7 +94,7 @@ def compose_email(template, name, data_dict):
     TOTAL_SPENT="{:,}".format(data_dict['total_spent']),
     TOTAL_CONVERSION="{:,}".format(data_dict['total_conversion']),
     CPC=unroll_sentence(data_dict['cpc']),
-    GITHUB_LINK='https://github.com/tiaradwiputri/fire-capstone'
+    GITHUB_LINK='https://github.com/reyvb24/capstone_project'
   )
   return composed
 
@@ -148,7 +148,7 @@ def create_plot(file_path="data_input/data.csv", id=['936', '1178']):
   return(imagename)
 
 def main(subject, \
-  contact_file='mentor@algorit.ma', \
+  contact_file='templates/contacts.txt', \
   template_file='templates/body.txt', \
   data_file='data_input/data.csv'):
   """   
